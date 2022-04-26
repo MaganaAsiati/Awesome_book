@@ -8,14 +8,14 @@ export const constructListPage = () => {
   contactDiv.style.display = 'none';
 };
 
-export function constructFormPage() {
+export const constructFormPage = () => {
   bookListDiv.style.display = 'none';
   formDiv.style.display = 'block';
   contactDiv.style.display = 'none';
-}
+};
 
-export function constructContactPage() {
+export const constructContactPage = () => {
   bookListDiv.style.display = 'none';
   formDiv.style.display = 'none';
   contactDiv.style.display = 'block';
-}
+};
