@@ -1,41 +1,21 @@
 /* eslint-disable max-classes-per-file */
-class Book {
-  constructor(title, author) {
-    this.title = title;
-    this.author = author;
-  }
-}
+import { constructContactPage, constructFormPage, constructListPage } from './modules/page.js';
+import { DateTime } from './modules/luxon.js';
+import Store from './modules/storage.js';
+import Book from './modules/book.js';
 
-class Store {
-  static getBooks() {
-    let books;
-    if (localStorage.getItem('books') === null) {
-      books = [];
-    } else {
-      books = JSON.parse(localStorage.getItem('books'));
-    }
+const contactButton = document.getElementById('li-contact');
+const liForm = document.getElementById('li-list');
+const listAdd = document.getElementById('li-add');
 
-    return books;
-  }
+contactButton.addEventListener('click', constructContactPage);
+listAdd.addEventListener('click', constructFormPage);
+liForm.addEventListener('click', constructListPage);
 
-  static addBook(book) {
-    const books = Store.getBooks();
-    books.push(book);
-    localStorage.setItem('books', JSON.stringify(books));
-  }
+const dateElement = document.getElementById('date');
 
-  static removeBook(author) {
-    const books = Store.getBooks();
-
-    books.forEach((book, index) => {
-      if (book.author === author) {
-        books.splice(index, 1);
-      }
-    });
-
-    localStorage.setItem('books', JSON.stringify(books));
-  }
-}
+const date = DateTime.now();
+dateElement.textContent = date.toLocaleString(DateTime.DATETIME_MED);
 
 class showBooks {
   static displayBooks() {
@@ -85,34 +65,3 @@ document.querySelector('#book-list').addEventListener('click', (e) => {
 
   Store.removeBook(e.target.parentElement.previousElementSibling.textContent);
 });
-const bookListDiv = document.getElementById('table');
-const formDiv = document.getElementById('form');
-const contactDiv = document.getElementById('contact');
-const contactButton = document.getElementById('li-contact');
-const liForm = document.getElementById('li-list');
-const listAdd = document.getElementById('li-add');
-
-function constructListPage() {
-  bookListDiv.style.display = 'block';
-  formDiv.style.display = 'none';
-  contactDiv.style.display = 'none';
-}
-
-function constructFormPage() {
-  bookListDiv.style.display = 'none';
-  formDiv.style.display = 'block';
-  contactDiv.style.display = 'none';
-}
-
-function constructContactPage() {
-  bookListDiv.style.display = 'none';
-  formDiv.style.display = 'none';
-  contactDiv.style.display = 'block';
-}
-
-contactButton.addEventListener('click', constructContactPage);
-listAdd.addEventListener('click', constructFormPage);
-liForm.addEventListener('click', constructListPage);
-
-const d = new Date('2015-03-25');
-document.getElementById('demo').innerHTML = d;
